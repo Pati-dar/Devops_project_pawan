@@ -1,0 +1,87 @@
+1. What is Linux?
+Linux is a free and open-source family of operating systems that is resilient and flexible. An OS is the software that directly manages a system’s hardware and resources, like the CPU, memory, and storage. The OS sits between applications and hardware and makes the connections between all your software and the physical resources that do the work.
+
+2. What is the difference between Hard Link & Soft Link
+Hard Link - A file can be accessed through many different names known as hard links.
+Soft Link - A file can be accessed through different references pointing to that file is known as a soft link.
+
+When an original file gets deleted soft link becomes invalid whereas, a hard link is valid even if the target file is deleted.
+The command used for the creation of hard link is “ln“. As against, the command used for a soft link is “ln -s“.
+Hard links are restricted to its own partitions, but soft links can cover different file systems.
+
+3. What is a Kernel in Linux?
+The Linux kernel is the main component of a Linux operating system (OS) and is the core interface between a computer’s hardware and its processes. It communicates between the 2, managing resources as efficiently as possible.
+
+The kernel is so named because—like a seed inside a hard shell—it exists within the OS and controls all the major functions of the hardware, whether it’s a phone, laptop, server, or any other kind of computer.
+
+The kernel has 4 jobs:
+
+Memory management: Keep track of how much memory is used to store what, and where
+Process management: Determine which processes can use the central processing unit (CPU), when, and for how long
+Device drivers: Act as mediator/interpreter between the hardware and processes
+System calls and security: Receive requests for service from the processes
+
+4. How do you create a user account?
+We can create a user using useradd command in linux and manage permissions using chmod.
+[root@rhel7 ~]# useradd p1
+
+5. What is the ‘grep’ command used for in Linux?
+Grep is a very powerful utility in Linux that is used for searching patterns within files or a stream of text
+
+[root@rhel7 ~]# cat /etc/group | grep p1
+p1:x:1001:
+g1:x:1002:p1
+g2:x:1003:p1
+g3:x:1004:p1
+
+6.Step1: Create user p1
+[root@rhel7 ~]# useradd p1
+Step2: He should be part of 3 groups g1,g2,g3.
+[root@rhel7 ~]# groupadd g1
+[root@rhel7 ~]# groupadd g2
+[root@rhel7 ~]# groupadd g3
+[root@rhel7 ~]# usermod -aG g1,g2,g3 p1
+Step3: whenever he creates a file automatically in the group section of file grp g1 should come.
+[root@rhel7 ~]# cat /etc/group | grep p1
+p1:x:1001:
+g1:x:1002:p1
+g2:x:1003:p1
+g3:x:1004:p1
+[root@rhel7 ~]# sudo su - p1
+[p1@rhel7 ~]$ pwd
+/home/p1
+[p1@rhel7 ~]$ touch file1.txt
+[p1@rhel7 ~]$ ls -l
+total 0
+-rw-r--r--. 1 p1 g1 0 Apr 30 15:31 file1.txt
+[p1@rhel7 ~]$
+
+
+7. Step1: Create directory /tmp/bg as root user and create files inside it.
+root@vagrant:~# mkdir /tmp/bg
+root@vagrant:/tmp/bg# touch file1.txt file2.txt
+root@vagrant:/tmp/bg# ls -l
+total 0
+-rw-r--r-- 1 root root 0 May  3 15:19 file1.txt
+-rw-r--r-- 1 root root 0 May  3 15:19 file2.txt
+
+ Step2: “abhi” should be the owner of the directory. He should be able to create files and delete files inside 
+
+ the directory and also he should be able to add content to all files inside the directory.
+ 
+root@vagrant:/tmp/bg# adduser abhi
+root@vagrant:/tmp/bg# chown abhi:abhi file1.txt file2.txt
+root@vagrant:/tmp/bg# ls -l
+total 0
+-rw-r--r-- 1 abhi abhi 0 May  3 15:19 file1.txt
+-rw-r--r-- 1 abhi abhi 0 May  3 15:19 file2.txt
+root@vagrant:/tmp/bg#
+
+
+8. You suspect that a particular process is consuming excessive CPU resources on your Linux server. How 
+would you identify and terminate this process
+
+top will display what is using your CPU. If you have it installed, htop allows you more fine-grained control, including filtering by—in your case—CPU
+The CMD column shows the command that started the process. Understanding what the process does can help you decide whether it’s safe to terminate it.
+
+to kill --> kill PID %% kill -9 PID
