@@ -1,0 +1,258 @@
+1. Based on what you have learnt in the class, do the following steps: 
+
+     a. Create a new folder
+	 
+		mkdir project-folder
+		cd project-folder
+		
+     b. Put the following files in the folder
+                        Code.txt 
+                        Log.txt 
+                        Output.txt 
+						
+		touch Code.txt Log.txt Output.txt
+		echo "Sample code" > Code.txt
+		echo "Sample log" > Log.txt
+		echo "Sample output" > Output.txt
+		
+     c. Stage the Code.txt and Output.txt files
+	 
+		git init
+		git add Code.txt Output.txt
+		
+     d. Commit them 
+		
+		git commit -m "Add Code.txt and Output.txt"
+		
+     e. And finally push them to GitHub
+		
+		git remote add origin https://github.com/Pati-dar/Git_Practical.git
+		git branch -M main
+		git push -u origin main
+		
+2.  Tasks to Be Performed: 
+
+1. Create a Git working directory with feature1.txt and feature2.txt in the master branch 
+
+       mkdir git-working-dir
+       cd git-working-dir
+       git init
+       touch feature1.txt feature2.txt
+       git add feature1.txt feature2.txt
+       git commit -m "Added feature1.txt and feature2.txt to master branch"
+
+
+2. Create 3 branches develop, feature1 and feature2 
+   
+   
+      git branch develop; git branch feature1; git branch feature2
+
+
+3. In develop branch create develop.txt, do not stage or commit it 
+
+	  git checkout develop
+      touch develop.txt
+   
+4. Stash this file and check out to feature1 branch 
+
+      git stash 
+      git checkout feature1
+   
+5. Create new.txt file in feature1 branch, stage and commit this file 
+    
+	 touch new.txt
+	 git add new.txt
+	 git commit -m  "New.txt file commited in feature1 branch"
+    
+6. Checkout to develop, unstash this file and commit 
+     
+	 git checkout develop
+	 git stash pop
+	 git add develop.txt
+	 git commit -m "develop.txt file commited in develop branch"
+	 
+
+7. Please submit all the Git commands used to do the above steps
+
+   All the commands are mentioned under the points. 
+
+3.   Tasks to Be Performed: 
+
+1. Create a Git working directory, with the following branches: 
+               Develop 
+               F1 
+               f2 
+			   
+	mkdir git-branches-task
+    cd git-branches-task
+    git init
+
+	git checkout -b develop
+	git checkout master
+	git checkout -b f1
+	git checkout master
+	git checkout -b f2
+	git checkout master
+
+	
+2. In the master branch, commit main.txt file 
+   
+   touch main.txt
+   git add main.txt
+   git commit -m "main.txt comitted in master branch"
+
+
+3. Put develop.txt in develop branch, f1.txt and f2.txt in f1 and f2 respectively 
+     
+	git checkout develop
+    touch develop.txt
+	git add develop.txt
+	git commit -m "develop.txt comitted in develop branch"
+	
+	git checkout f1
+    touch f1.txt
+	git add f1.txt
+	git commit -m "f1.txt comitted in f1 branch"
+	
+	git checkout f2
+    touch f2.txt
+	git add f2.txt
+	git commit -m "f2.txt comitted in f2 branch"
+
+    
+4. Push all these branches to GitHub
+
+	git remote add origin https://github.com/Pati-dar/git_branches_task.git
+	git branch -M main
+	git push -u origin main
+	
+	git checkout develop
+	git push -u origin develop
+	
+	git checkout f1
+	git push -u origin f1
+	
+	git checkout f2
+	git push -u origin f2
+	
+
+5. On local delete f2 branch 
+   
+   git checkout main
+   git branch -D f2
+   
+   
+6. Delete the same branch on GitHub as well
+
+   git push origin --delete f2
+
+4. Tasks to Be Performed:
+
+1. Put master.txt on master branch, stage and commit 
+
+   mkdir git_task_4
+   cd git_task_4
+   git init
+   
+   touch master.txt
+   git add master.txt
+   git commit -m "comitted master.txt in master branch"
+
+   
+2. Create 3 branches: public 1, public 2 and private 
+
+   git checkout master
+   git branch public1
+   git branch public2
+   git branch private
+   
+   
+3. Put public1.txt on public 1 branch, stage and commit 
+
+   git checkout public1
+   touch public1.txt
+   git add public1.txt
+   git commit -m "Commited the public1.txt in public1"
+
+4. Merge public 1 on master branch 
+
+	git checkout master
+	git merge public1 -m "Merging public1 to master"
+
+5. Merge public 2 on master branch 
+   
+   When merging public 2 it was showing up to date so i have created on file inside public2 and then merged
+ 
+   git checkout public2
+   touch public2.txt
+   git add public2.txt
+   git commit -m "Commited the public2.txt in public2"
+   
+   git checkout master
+   git merge public2 -m "Merging public2 to master"
+
+
+6. Edit master.txt on private branch, stage and commit 
+
+   git checkout private
+   echo "Editing file at private branch"> master.txt
+   git add master.txt
+   git commit -m "Commit the master.txt file at private branch"
+   
+7. Now update branch public 1 and public 2 with new master code in private 
+   
+   git checkout master
+   git merge private -m "merging private to master"
+   
+   git checkout public1
+   git merge master -m "merging master to public1 so that it have private as well"
+	
+	git checkout public2
+	git merge master -m "merging master to public2 so that it have private as well"
+
+8. Also update new master code on master 
+ 
+   git checkout master
+   
+   Already updatded in step 7
+
+9. Finally update all the code on the private branch
+
+   git checkout private
+   git merge master -m "Merged updated master into private"
+   git merge public1 -m "Merged public1 into private"
+   git merge public2 -m "Merged public2 into private"
+
+
+5. Tasks to Be Performed: 
+
+1. Create a Git Flow workflow architecture on Git 
+
+    mkdir git_task_5
+	cd git_task_5
+	git init
+
+2. Create all the required branches 
+
+   git checkout main
+   git checkout -b feature
+   
+
+3. starting from e feature branch, push the branch to the master, following the architecture 
+
+	git checkout master
+	git merge feature -m "Merged feature into master"
+
+4. Push an urgent.txt on master using hotfix
+
+     git checkout master
+     git checkout -b hotfix
+	 
+	 touch urgent.txt
+	 echo "This is an urgent fix" > urgent.txt
+     git add urgent.txt
+     git commit -m "Add urgent.txt via hotfix"
+	 
+	 git checkout master
+	 git merge hotfix -m "Hotfix: urgent.txt added"
+
