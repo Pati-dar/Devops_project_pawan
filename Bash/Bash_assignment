@@ -1,0 +1,294 @@
+Task 1: File Management Script
+
+Write a Bash script thatg
+- Creates a directory named "backup" in the user's home directory^
+- Copies all .txt files from the current directory into the "backup" directory^
+- Appends the current date and time to the filenames of the copied files.
+
+
+#!/bin/bash
+
+# Step 1: Create a backup directory in the user's home directory
+backup_dir="$HOME/backup"
+mkdir -p "$backup_dir"
+
+# Step 2: Get the current date and time in YYYYMMDD_HHMMSS format
+timestamp=$(date +%Y%m%d_%H%M%S)
+
+# Step 3: Copy all .txt files from current directory to backup directory with timestamp
+for file in *.txt; do
+    # Check if any .txt files exist
+    if [ -f "$file" ]; then
+        base_name=$(basename "$file" .txt)
+        cp "$file" "$backup_dir/${base_name}_$timestamp.txt"
+    fi
+done
+
+echo "Backup completed. Files copied to: $backup_dir"
+
+Make it executable:
+
+bash
+Copy code
+chmod +x backup_txt_files.sh
+Run it from the directory where your .txt files are:
+
+bash ./backup_txt_files.sh
+
+
+Task 2: System Health Check
+
+Create a script thatg
+- Checks the system’s CPU and memory usage^
+- Reports if the CPU usage is above 80% or if the available memory is below 20%^
+- Logs the results to a file named system_health.log.
+
+
+#!/bin/bash
+
+# Log file
+log_file="system_health.log"
+timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+# Get CPU usage 
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8}')
+cpu_usage=${cpu_usage%.*}  # Remove decimal
+
+# Get memory usage: free memory percentage
+read total used free <<< $(free -m | awk 'NR==2 {print $2, $3, $4}')
+mem_free_percent=$(( 100 * free / total ))
+
+# status message
+status="[$timestamp] CPU: ${cpu_usage}% used, Memory: ${mem_free_percent}% free."
+
+# Check thresholds
+if [ "$cpu_usage" -gt 80 ] || [ "$mem_free_percent" -lt 20 ]; then
+    status="$status WARNING: High usage detected!"
+fi
+
+# Append to log file
+echo "$status" >> "$log_file"
+
+
+Task 3: User Account Management
+
+Write a script thatg
+- Reads a list of usernames from a file (e.g., user_list.txt)^
+- Creates a new user for each username^
+- Generates a random password for each user and saves the username and password to a file named
+credentials.txt
+
+
+#!/bin/bash
+
+# Input file containing usernames
+input_file="user_list.txt"
+
+# Output file for storing credentials
+output_file="credentials.txt"
+
+# Ensure output file is empty before writing
+> "$output_file"
+
+# Loop through each line (username) in the input file
+while IFS= read -r username; do
+    if id "$username" &>/dev/null; then
+        echo "User $username already exists. Skipping."
+    else
+        # Create the user (no home directory: remove -M if you want to create one)
+        useradd -m "$username"
+
+        # Generate a random password (12 characters)
+        password=$(openssl rand -base64 12)
+
+        # Set the user's password
+        echo "$username:$password" | chpasswd
+
+        # Save credentials to the file
+        echo "$username:$password" >> "$output_file"
+
+        echo "User $username created."
+    fi
+done < "$input_file"
+
+echo "All users processed. Credentials saved in $output_file"
+
+
+
+Task 4: Automated Backup
+
+Create a script thatg
+- Takes a directory path as input from the user^
+- Compresses the directory into a .tar.gz file^
+- Saves the compressed file with a name that includes the current date (e.g., backup_2023-08-20.tar.gz).
+
+
+
+#!/bin/bash
+
+# Prompt user for the directory to back up
+read -p "Enter the full path of the directory to back up: " dir_path
+
+# Check if directory exists
+if [ ! -d "$dir_path" ]; then
+    echo "Error: Directory does not exist."
+    exit 1
+fi
+
+# Get the current date
+current_date=$(date +%Y-%m-%d)
+
+# Extract directory name (basename)
+dir_name=$(basename "$dir_path")
+
+# Create backup filename
+backup_file="backup_${dir_name}_${current_date}.tar.gz"
+
+# Compress the directory
+tar -czf "$backup_file" -C "$(dirname "$dir_path")" "$dir_name"
+
+# Confirm completion
+echo "Backup successful. File created: $backup_file"
+
+
+Task 5: Simple To-Do List
+
+Create a Bash script thatg
+- Implements a simple command-line to-do list^
+- Allows the user to add tasks, view tasks, and remove tasks^
+- Saves the tasks to a file (e.g., todo.txt).
+
+
+#!/bin/bash
+
+# File to store tasks
+todo_file="todo.txt"
+
+# Function to add a task
+add_task() {
+    read -p "Enter task description: " task
+    echo "$task" >> "$todo_file"
+    echo "Task added."
+}
+
+# Function to view tasks
+view_tasks() {
+    if [ ! -s "$todo_file" ]; then
+        echo "No tasks found."
+        return
+    fi
+
+    echo "Your To-Do List:"
+    nl -w2 -s'. ' "$todo_file"
+}
+
+# Function to remove a task
+remove_task() {
+    view_tasks
+    read -p "Enter task number to remove: " task_num
+    if [[ "$task_num" =~ ^[0-9]+$ ]]; then
+        sed -i "${task_num}d" "$todo_file"
+        echo "Task removed."
+    else
+        echo "Invalid input."
+    fi
+}
+
+# Main menu
+while true; do
+    echo ""
+    echo "===== TO-DO LIST MENU ====="
+    echo "1. Add Task"
+    echo "2. View Tasks"
+    echo "3. Remove Task"
+    echo "4. Exit"
+    read -p "Choose an option (1-4): " choice
+
+    case $choice in
+        1) add_task ;;
+        2) view_tasks ;;
+        3) remove_task ;;
+        4) echo "Goodbye!"; exit 0 ;;
+        *) echo "Invalid option. Please try again." ;;
+    esac
+done
+
+
+Task 6: Automated Software Installation
+
+Write a script thatg
+- Reads a list of software package names from a file (e.g., packages.txt)^
+- Installs each package using the appropriate package manager (apt, yum, etc.)^
+- Logs the installation status of each package.
+
+
+#!/bin/bash
+
+# File containing package names
+package_file="packages.txt"
+
+# Log file for installation status
+log_file="install_log.txt"
+> "$log_file"  # Clear log file at start
+
+# Detect package manager
+if command -v apt &>/dev/null; then
+    pkg_mgr="apt"
+else
+    echo "Unsupported system: no apt, yum, or dnf found."
+    exit 1
+fi
+
+echo "Using package manager: $pkg_mgr"
+echo "Installation started at $(date)" >> "$log_file"
+
+# Read and install each package
+while IFS= read -r pkg; do
+    if [ -n "$pkg" ]; then
+        echo "Installing $pkg..."
+        if $install_cmd "$pkg" &>> "$log_file"; then
+            echo "$pkg: SUCCESS" >> "$log_file"
+        else
+            echo "$pkg: FAILED" >> "$log_file"
+        fi
+    fi
+done < "$package_file"
+
+echo "Installation completed. Log saved to $log_file."
+
+
+
+Task 7: Text File Processing
+
+Create a script thatg
+- Takes a text file as input^
+- Counts and displays the number of lines, words, and characters in the file^
+- Finds and displays the longest word in the file.
+
+
+#!/bin/bash
+
+# Prompt user for a text file
+read -p "Enter the path to the text file: " file
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+    echo "Error: File not found."
+    exit 1
+fi
+
+# Count lines, words, and characters
+lines=$(wc -l < "$file")
+words=$(wc -w < "$file")
+chars=$(wc -m < "$file")
+
+# Find the longest word
+longest_word=$(tr -s '[:space:][:punct:]' '\n' < "$file" | awk '{ if (length > max) { max = length; word = $0 } } END { print word }')
+
+# Display results
+echo "File: $file"
+echo "----------------------------"
+echo "Lines      : $lines"
+echo "Words      : $words"
+echo "Characters : $chars"
+echo "Longest word: $longest_word"
