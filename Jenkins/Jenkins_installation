@@ -41,11 +41,11 @@ Step:8 Click on Save and Continue
 
 
 *******************************************************
-EXERCISE:1
+EXERCISE:1 Fress styl
 *******************************************************
 > goto> jenkins>dashboard>create new job>
 select> free style project> give the name >give the description
-> goto> scource code management>
+> goto> scource code management> 
     GIT: select
     URL: your github repository URL
     Branches to build: */master or /main
