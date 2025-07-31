@@ -1,0 +1,65 @@
+Theoretical Overview of Docker and Containerization
+1. Install Docker and create Dockerfiles to containerize applications?
+
+Part 1: Install Docker
+
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+docker --version
+sudo docker run hello-world
+
+
+Part 2: Create Dockerfiles to Containerize Applications
+
+Example : Python Flask App
+
+app.py
+
+from flask import Flask
+app = Flask(__name__)
+
+
+def hello():
+    return "Hello from Flask inside Docker!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
+
+
+# Use official Python image
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+
+CMD ["python", "app.py"]
+
+
+Build and Run Docker Image
+
+cd python-app
+docker build -t flask-app .
+docker run -d -p 5000:5000 flask-app
+

@@ -1,0 +1,67 @@
+Ansible
+
+1. Install and configure Ansible, Puppet, or Chef on a local or cloud
+environment. Write and execute basic configuration scripts.?
+
+
+Step 1: Install Ansible
+# For Ubuntu/Debian
+sudo apt update
+sudo apt install ansible -y
+
+# For CentOS/RHEL
+sudo yum install epel-release -y
+sudo yum install ansible -y
+
+Step 2: Inventory Setup
+Edit or create the Ansible inventory file:
+
+sudo vi /etc/ansible/hosts
+
+ADD
+
+[webservers]
+localhost ansible_connection=local
+
+
+Step 3: Basic Playbook
+Create a playbook named install_apache.yml:
+
+---
+- name: Install and start Apache
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+RUN Playbook
+
+ansible-playbook install_apache.yml
+
+
+Puppet install
+
+Debian/Ubuntu -->
+
+wget https://apt.puppetlabs.com/puppet-release-focal.deb
+sudo dpkg -i puppet-release-focal.deb
+sudo apt update
+sudo apt install puppet-agent -y
+
+
+Chef install
+
+# Download Chef Workstation from https://www.chef.io/downloads/tools/workstation
+Debian:
+wget https://packages.chef.io/files/stable/chef-workstation/XX/ubuntu/20.04/chef-workstation_XX_amd64.deb
+sudo dpkg -i chef-workstation_XX_amd64.deb

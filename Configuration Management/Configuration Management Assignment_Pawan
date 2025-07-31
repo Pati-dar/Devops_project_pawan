@@ -1,0 +1,116 @@
+Configuration Management 
+1. Research and compare different configuration management tools (Ansible, 
+Puppet, Chef) and write a report on their use cases and advantages? 
+
+Introduction -->
+Configuration Management (CM) tools automate the provisioning, configuration, and management of IT infrastructure. They help ensure consistency across environments, reduce manual errors, and speed up deployments.
+
+1. Ansible
+
+Overview -->
+Developed by: Red Hat
+Language: YAML (for playbooks), Python (backend)
+Architecture: Agentless (uses SSH)
+
+Use Cases -->
+Automating cloud provisioning
+Application deployment
+Configuration management
+Continuous delivery pipelines
+
+Advantages -->
+Easy to learn and use: Uses YAML, which is human-readable and easy for beginners.
+Agentless architecture: No need to install agents on client machines; uses SSH for communication.
+Idempotent: Ensures consistent end-state even if run multiple times.
+Strong community and Red Hat support
+Flexible: Works well with dynamic inventories and cloud environments
+
+
+2. Puppet
+Overview -->
+Developed by: Puppet, Inc.
+Language: Puppet DSL (Domain-Specific Language), Ruby (backend)
+Architecture: Agent-based (can also be agentless with Bolt)
+
+Use Cases -->
+
+Managing large-scale infrastructure
+Enforcing system state and compliance
+Automating patch management
+Operating system and middleware configuration
+
+Advantages -->
+Mature and enterprise-ready: Over a decade in use; robust support for large infrastructures.
+Declarative language: Focuses on what the system should look like rather than how to do it.
+Strong reporting and auditing: Good for compliance and visibility.
+Model-driven approach: Abstracts configuration logic for clarity and reuse.
+Role-based access control (RBAC) for secure operations.
+
+3. Chef
+Overview -->
+Developed by: Progress Software (formerly Chef Software Inc.)
+Language: Ruby
+Architecture: Agent-based (uses a master-server model)
+
+Use Cases -->
+Complex configuration management
+Infrastructure as code (IaC) in enterprise environments
+DevOps practices and CI/CD integration
+Cloud automation and hybrid environments
+
+Advantages -->
+Powerful and flexible: Highly customizable for complex environments.
+Test-driven infrastructure: Integrates well with testing frameworks like Test Kitchen and InSpec.
+Developer-centric: Ruby-based approach suits developers who prefer imperative programming.
+Good ecosystem: Supermarket for community cookbooks, strong integrations.
+
+
+
+2. Extend the CI pipeline to include continuous delivery using Jenkins or 
+GitLab CI. Implement a blue-green deployment strategy?
+
+Blue-Green Deployment->
+Blue-Green Deployment is a zero-downtime release strategy where two identical environments — Blue (current live) and Green (new version) — are maintained. The new version is deployed to Green, tested, and then traffic is switched from Blue to Green.
+
+
+Workflow Overview :
+Steps:
+Code Push  triggers CI pipeline
+Build the application
+Run tests
+Deploy to the Green environment
+Test the Green environment
+Switch traffic to Green (if tests pass)
+Mark Blue as idle, keep it for rollback
+
+
+variables:
+  BLUE_ENV: "/var/www/blue"
+  GREEN_ENV: "/var/www/green"
+  
+deploy_to_green:
+  stage: deploy
+  script:
+    - |
+      if [ "$ACTIVE" = "$BLUE_ENV" ]; then
+        TARGET=$GREEN_ENV
+      else
+        TARGET=$BLUE_ENV
+      fi
+      cp -r ./* $TARGET/
+
+health_check:
+  stage: deploy
+  script:
+    - curl -f http://localhost:$TARGET/health
+	
+switch_traffic:
+  stage: switch
+  script:
+    - |
+      if [ "$ACTIVE" = "$BLUE_ENV" ]; then
+        echo $GREEN_ENV > /var/www/current
+      else
+        echo $BLUE_ENV > /var/www/current
+      fi
+      systemctl reload nginx

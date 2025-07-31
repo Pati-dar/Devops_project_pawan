@@ -1,0 +1,59 @@
+1. Use Docker Compose to define and run multi-container applications?
+
+
+Docker Compose is a tool used to define, configure, and run multi-container Docker applications using a simple YAML file.
+
+Step 1: Create docker-compose.yml
+
+services:
+  web:
+    build: ./app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+
+Step 2: Create a Simple Flask App in app/app.py
+
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello from Flask with MySQL!"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+
+
+Step 3: Create a Dockerfile for Flask App in app/Dockerfile
+
+Dockerfile
+
+FROM python:3.9-slim
+WORKDIR /app
+COPY app.py .
+RUN pip install flask
+CMD ["python", "app.py"]
+
+
+Step 4: Run with Docker Compose
+
+docker-compose up --build
+
+Flask app available on http://localhost:5000
+
+MySQL accessible at localhost:3306
+
