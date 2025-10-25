@@ -1,0 +1,150 @@
+1. Kubernetes Setup
+Question:
+
+Set up a local Kubernetes cluster using Minikube or a managed Kubernetes service (e.g., GKE, EKS).
+
+Answer:
+
+For this task, I used Minikube to set up a local Kubernetes cluster on my system.
+
+Steps Followed:
+
+Installed Minikube and kubectl (Kubernetes CLI).
+
+Started Minikube using the command:
+
+minikube start
+
+
+Verified the setup with:
+
+kubectl get nodes
+
+
+It showed one node in the “Ready” state, confirming that the local Kubernetes cluster was running successfully.
+
+Result:
+Minikube cluster started successfully with one master node and was ready for application deployment.
+
+Tools Used:
+Minikube, kubectl, Docker.
+
+2. Application Deployment
+Question:
+
+Deploy a simple application to your Kubernetes cluster.
+
+Answer:
+
+I deployed a simple Nginx web application on the Kubernetes cluster.
+
+Steps Followed:
+
+Created a deployment file named nginx-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+
+Applied the deployment using:
+
+kubectl apply -f nginx-deployment.yaml
+
+
+Exposed the application using a Service:
+
+kubectl expose deployment nginx-deployment --type=NodePort --port=80
+
+
+Accessed the running app using:
+
+minikube service nginx-deployment
+
+
+Result:
+The Nginx web page was accessible in the browser, confirming a successful deployment.
+
+3. Resource Management
+Question:
+
+Practice managing Kubernetes resources like Pods, Services, and Deployments.
+
+Answer:
+
+I practiced creating, scaling, and deleting Kubernetes resources.
+
+Steps Followed:
+
+To check all running Pods:
+
+kubectl get pods
+
+
+To scale the deployment to 3 replicas:
+
+kubectl scale deployment nginx-deployment --replicas=3
+
+
+To view the Service details:
+
+kubectl get svc
+
+
+To delete resources:
+
+kubectl delete deployment nginx-deployment
+kubectl delete svc nginx-deployment
+
+
+Result:
+I was able to create, scale, and manage Pods, Services, and Deployments effectively.
+
+4. Helm Charts
+Question:
+
+Use Helm to package and deploy applications on Kubernetes.
+
+Answer:
+
+I used Helm, the Kubernetes package manager, to simplify deployment.
+
+Steps Followed:
+
+Installed Helm using:
+
+choco install kubernetes-helm
+
+
+Created a new Helm chart:
+
+helm create my-nginx
+
+
+Modified the default values in values.yaml to use the nginx image.
+
+Installed the chart on the cluster:
+
+helm install my-nginx ./my-nginx
+
+
+Verified the deployment:
+
+helm list
+kubectl get all
