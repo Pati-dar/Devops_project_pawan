@@ -1,0 +1,257 @@
+1. What are data structures, and why are they important?
+
+Answer:
+Data structures are organized ways to store and manage data efficiently. Examples include lists, stacks, queues, trees, and dictionaries. They are important because they help in faster data access, efficient memory use, and easier algorithm implementation.
+
+2. Explain the difference between mutable and immutable data types with examples.
+
+Answer:
+Mutable data types can be changed after creation (e.g., lists, dictionaries).
+Immutable data types cannot be changed after creation (e.g., strings, tuples).
+Example:
+
+list1 = [1, 2, 3]   # Mutable
+tuple1 = (1, 2, 3)  # Immutable
+
+3. What are the main differences between lists and tuples in Python?
+
+Answer:
+
+Lists are mutable; tuples are immutable.
+
+Lists use square brackets []; tuples use parentheses ().
+
+Tuples are faster and used for fixed data.
+Example: list1 = [1,2,3], tuple1 = (1,2,3)
+
+4. Describe how dictionaries store data.
+
+Answer:
+Dictionaries store data as key-value pairs using a hash table. Each key is unique and maps to a specific value.
+
+5. Why might you use a set instead of a list in Python?
+
+Answer:
+Sets automatically remove duplicate values and allow faster membership testing using hashing.
+
+6. What is a string in Python, and how is it different from a list?
+
+Answer:
+A string is a sequence of characters enclosed in quotes. Unlike lists, strings are immutable and can only store text data.
+
+7. How do tuples ensure data integrity in Python?
+
+Answer:
+Tuples are immutable, meaning their contents cannot change after creation. This prevents accidental modifications.
+
+8. What is a hash table, and how does it relate to dictionaries in Python?
+
+Answer:
+A hash table stores data using a hash function that maps keys to memory locations. Python dictionaries are implemented using hash tables.
+
+9. Can lists contain different data types in Python?
+
+Answer:
+Yes, lists can hold elements of mixed data types such as integers, strings, and floats together.
+
+10. Explain why strings are immutable in Python.
+
+Answer:
+Strings are immutable to make them secure and memory-efficient, allowing them to be safely used as dictionary keys or in multiple references.
+
+11. What advantages do dictionaries offer over lists for certain tasks?
+
+Answer:
+Dictionaries allow faster lookups by keys instead of index positions, making them ideal for mapping relationships like name → age.
+
+12. How do sets handle duplicate values in Python?
+
+Answer:
+Sets automatically remove duplicates, keeping only unique elements.
+
+13. Describe a scenario where using a tuple would be preferable over a list.
+
+Answer:
+Tuples are preferred when storing fixed data that shouldn’t change, like geographic coordinates (latitude, longitude).
+
+14. How does the “in” keyword work differently for lists and dictionaries?
+
+Answer:
+
+In lists: checks if a value exists.
+
+In dictionaries: checks if a key exists.
+
+Example:
+
+5 in [1,2,3,5]  # True  
+"name" in {"name":"John"}  # True
+
+15. Can you modify the elements of a tuple? Explain why or why not.
+
+Answer:
+No, tuples are immutable, so their elements cannot be changed after creation.
+
+16. What is a nested dictionary, and give an example of its use case.
+
+Answer:
+A nested dictionary has dictionaries inside another dictionary.
+Example:
+
+student = {"name":"John", "marks":{"math":90,"science":85}}
+
+17. Describe the time complexity of accessing elements in a dictionary.
+
+Answer:
+Accessing elements by key in a dictionary has an average time complexity of O(1) due to hashing.
+
+18. In what situations are lists preferred over dictionaries?
+
+Answer:
+Lists are preferred when data order matters or when elements don’t need a unique key (e.g., storing student roll numbers).
+
+19. Why are dictionaries considered unordered, and how does that affect data retrieval?
+
+Answer:
+Dictionaries use hash-based storage, so items are not stored in insertion order (until Python 3.7). Retrieval is based on key, not position.
+
+20. Explain the difference between a list and a dictionary in terms of data retrieval.
+
+Answer:
+
+List: Accessed by index (list[0])
+
+Dictionary: Accessed by key (dict["name"])
+
+Practical Questions (Python)
+1. Create a string with your name and print it
+name = "Pawan"
+print(name)
+
+2. Find the length of the string "Hello World"
+print(len("Hello World"))
+
+3. Slice the first 3 characters from the string "Python Programming"
+text = "Python Programming"
+print(text[:3])
+
+4. Convert the string "hello" to uppercase
+print("hello".upper())
+
+5. Replace "apple" with "orange" in "I like apple"
+print("I like apple".replace("apple", "orange"))
+
+6. Create a list with numbers 1 to 5 and print it
+nums = [1,2,3,4,5]
+print(nums)
+
+7. Append number 10 to list [1,2,3,4]
+nums = [1,2,3,4]
+nums.append(10)
+print(nums)
+
+8. Remove number 3 from list [1,2,3,4,5]
+nums = [1,2,3,4,5]
+nums.remove(3)
+print(nums)
+
+9. Access second element in list ['a','b','c','d']
+letters = ['a','b','c','d']
+print(letters[1])
+
+10. Reverse list [10,20,30,40,50]
+nums = [10,20,30,40,50]
+nums.reverse()
+print(nums)
+
+11. Create a tuple with elements 100, 200, 300 and print it
+t = (100,200,300)
+print(t)
+
+12. Access second-to-last element of tuple ('red','green','blue','yellow')
+colors = ('red','green','blue','yellow')
+print(colors[-2])
+
+13. Find minimum number in tuple (10,20,5,15)
+nums = (10,20,5,15)
+print(min(nums))
+
+14. Find index of "cat" in tuple ('dog','cat','rabbit')
+animals = ('dog','cat','rabbit')
+print(animals.index("cat"))
+
+15. Create tuple with 3 fruits and check if "kiwi" is in it
+fruits = ('apple','banana','mango')
+print("kiwi" in fruits)
+
+16. Create a set with elements 'a','b','c' and print it
+s = {'a','b','c'}
+print(s)
+
+17. Clear all elements from set {1,2,3,4,5}
+s = {1,2,3,4,5}
+s.clear()
+print(s)
+
+18. Remove element 4 from set {1,2,3,4}
+s = {1,2,3,4}
+s.remove(4)
+print(s)
+
+19. Find union of sets {1,2,3} and {3,4,5}
+a = {1,2,3}
+b = {3,4,5}
+print(a.union(b))
+
+20. Find intersection of sets {1,2,3} and {2,3,4}
+a = {1,2,3}
+b = {2,3,4}
+print(a.intersection(b))
+
+21. Create dictionary with keys "name", "age", "city"
+person = {"name":"John","age":25,"city":"New York"}
+print(person)
+
+22. Add key-value pair "country":"USA"
+person = {'name':'John','age':25}
+person['country'] = 'USA'
+print(person)
+
+23. Access value of key "name"
+person = {'name':'Alice','age':30}
+print(person['name'])
+
+24. Remove key "age"
+person = {'name':'Bob','age':22,'city':'New York'}
+person.pop('age')
+print(person)
+
+25. Check if key "city" exists
+person = {'name':'Alice','city':'Paris'}
+print('city' in person)
+
+26. Create a list, tuple, and dictionary, and print them
+l = [1,2,3]
+t = (4,5,6)
+d = {'a':1,'b':2}
+print(l, t, d)
+
+27. Create list of 5 random numbers (1–100), sort ascending, print
+import random
+nums = random.sample(range(1,101),5)
+nums.sort()
+print(nums)
+
+28. Create list with strings and print element at index 3
+words = ['apple','banana','cherry','date','elderberry']
+print(words[3])
+
+29. Combine two dictionaries into one
+d1 = {'a':1,'b':2}
+d2 = {'c':3,'d':4}
+d1.update(d2)
+print(d1)
+
+30. Convert list of strings into a set
+lst = ['apple','banana','apple']
+print(set(lst))
