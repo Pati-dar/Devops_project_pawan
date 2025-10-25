@@ -1,0 +1,39 @@
+1. Implement unit tests, integration tests, and end-to-end tests for a sample application using frameworks like JUnit, TestNG, or Selenium? 
+
+Unit Testing (JUnit):
+
+I wrote simple test cases for a Calculator class that performs add, subtract, multiply, and divide functions.
+
+Example:
+
+@Test
+void testAddition() {
+    assertEquals(10, calc.add(6, 4));
+}
+
+
+This checks if each function gives the correct result.
+
+Integration Testing:
+
+I created another class MathService that uses the Calculator class.
+
+The test checked whether both classes work correctly together.
+
+Example result: For inputs (2,3), output = 11 → means integration is working.
+
+End-to-End Testing (Selenium):
+
+I used Selenium WebDriver to open a website and verify its title.
+
+Example:
+
+driver.get("https://www.example.com");
+assertEquals("Example Domain", driver.getTitle());
+
+
+This ensures the complete workflow (browser + application) works as expected.
+
+Conclusion:
+All three tests (unit, integration, and E2E) ran successfully.
+Tools used: JUnit 5, Selenium WebDriver, Java, and Maven.
