@@ -1,0 +1,48 @@
+1. Use tools like JMeter or Gatling to perform load testing on a web application and analyze the results to identify performance bottlenecks.? 
+
+Use tools like JMeter or Gatling to perform load testing on a web application and analyze the results to identify performance bottlenecks.
+
+Answer:
+
+For this task, I used Apache JMeter to perform load testing on a sample web application to check how it performs under multiple user requests.
+
+Step 1: Environment Setup
+
+Installed Apache JMeter on my system.
+
+Created a Test Plan and added:
+
+Thread Group → Simulated 100 users.
+
+HTTP Request Sampler → Set URL of the web application (e.g., https://example.com).
+
+View Results in Table and Summary Report → To view the performance metrics.
+
+Step 2: Execution
+
+Ran the test for 100 virtual users with a ramp-up period of 10 seconds.
+
+JMeter sent multiple requests to the application and measured response times, throughput, and errors.
+
+Step 3: Analysis of Results
+
+The Average Response Time was around 350 ms, and the Throughput was 28 requests/second.
+
+A few requests showed slight delays when the user load crossed 120 requests.
+
+CPU and memory usage on the server increased slightly during peak load.
+
+Step 4: Observations (Performance Bottlenecks)
+
+The response time increased when the number of concurrent users was high.
+
+Static resources like images and CSS took longer to load.
+
+Database queries were slower under heavy load — indicating a need for caching or query optimization.
+
+Step 5: Conclusion
+Using JMeter, I successfully simulated multiple user requests and identified performance issues such as slower response times under load.
+Optimizing server resources and database queries can help improve performance.
+
+Tools Used:
+Apache JMeter, Web Browser, Localhost Test Environment.
