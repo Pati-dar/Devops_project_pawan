@@ -1,0 +1,62 @@
+Integration Tests 1. Set up an environment for integration testing and write test cases that validate the interaction between different components of a system? 
+
+
+Answer:
+
+For integration testing, I created a small Java project with two components — a Calculator class and a MathService class.
+The goal was to test how these two classes work together.
+
+Step 1: Environment Setup
+
+Installed Java (JDK 17) and JUnit 5 testing framework.
+
+Used IntelliJ IDEA as the IDE.
+
+Added JUnit dependency in the pom.xml file (for Maven project).
+
+Step 2: Application Code
+
+// Calculator.java
+public class Calculator {
+    public int add(int a, int b) { return a + b; }
+    public int multiply(int a, int b) { return a * b; }
+}
+
+// MathService.java
+public class MathService {
+    private Calculator calculator = new Calculator();
+    public int calculateTotal(int a, int b) {
+        int sum = calculator.add(a, b);
+        int product = calculator.multiply(a, b);
+        return sum + product;
+    }
+}
+
+
+Step 3: Integration Test Code
+
+// MathServiceTest.java
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class MathServiceTest {
+    @Test
+    void testCalculateTotal() {
+        MathService service = new MathService();
+        int result = service.calculateTotal(2, 3);
+        assertEquals(11, result);  // (2+3) + (2*3) = 11
+    }
+}
+
+
+Step 4: Execution
+
+Ran the test using JUnit in IntelliJ.
+
+The test passed successfully, confirming that both classes interacted correctly.
+
+Step 5: Result
+The integration test verified that the MathService class correctly used the Calculator class for calculations.
+
+Tools Used:
+Java, JUnit 5, Maven, IntelliJ IDEA.
