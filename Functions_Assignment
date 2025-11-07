@@ -1,0 +1,307 @@
+1. What is the difference between a function and a method in Python?
+
+Answer:
+A function is a block of code that performs a specific task and is defined using the def keyword. It can exist independently and can be called by its name.
+A method is similar to a function but is associated with an object and defined within a class. Methods can modify the object’s state or access its data.
+
+2. Explain the concept of function arguments and parameters in Python.
+
+Answer:
+
+Parameters are the variable names listed in a function definition.
+Arguments are the actual values passed to the function when it is called.
+
+
+
+3. What are the different ways to define and call a function in Python?
+
+Answer:
+There are several ways to define and call functions in Python:
+
+Normal function
+
+Lambda (anonymous) function
+
+Using default arguments
+
+Using keyword arguments
+
+
+4. What is the purpose of the return statement in a Python function?
+
+Answer:
+The return statement is used to send a value back to the part of the program that called the function. Without return, the function returns None by default.
+
+
+
+5. What are iterators in Python and how do they differ from iterables?
+
+Answer:
+
+An iterable is an object capable of returning its members one at a time (e.g., lists, tuples, strings).
+
+An iterator is an object that represents a stream of data; it is created using the iter() function and produces elements one at a time using next().
+
+
+
+6. Explain the concept of generators in Python and how they are defined.
+
+Answer:
+A generator is a special type of function that yields items one at a time using the yield keyword instead of return. It produces values lazily (only when requested), which saves memory.
+
+
+
+7. What are the advantages of using generators over regular functions?
+
+Answer:
+Advantages of generators:
+
+Memory efficient: They don’t store all items in memory at once.
+
+Lazy evaluation: They generate values only when needed.
+
+Useful for large data processing.
+
+
+8. What is a lambda function in Python and when is it typically used?
+
+Answer:
+A lambda function is an anonymous, single-line function defined using the lambda keyword. It is typically used when a simple function is needed temporarily, such as inside map(), filter(), or sort().
+
+
+
+9. Explain the purpose and usage of the map() function in Python.
+
+Answer:
+The map() function applies a given function to each item of an iterable (like a list) and returns a map object (which can be converted to a list).
+
+Syntax:
+map(function, iterable)
+
+
+10. What is the difference between map(), reduce(), and filter() functions in Python?
+
+Answer:
+
+Function	Purpose	Returns	Example
+map()	Applies a function to each item	All results	map(lambda x: x*2, [1,2,3]) → [2,4,6]
+filter()	Filters items that meet a condition	Matching items	filter(lambda x: x>2, [1,2,3,4]) → [3,4]
+reduce()	Reduces all items to a single value	Single result	reduce(lambda x,y: x+y, [1,2,3,4]) → 10
+
+
+1. Write a Python function that takes a list of numbers as input and returns the sum of all even numbers in the list.
+
+Answer:
+This function checks each number in the list, and if it is even, adds it to the total sum.
+
+Program:
+
+def sum_even_numbers(numbers):
+    return sum(num for num in numbers if num % 2 == 0)
+
+# Example
+nums = [1, 2, 3, 4, 5, 6]
+print("Sum of even numbers:", sum_even_numbers(nums))
+
+
+Output:
+
+Sum of even numbers: 12
+
+2. Create a Python function that accepts a string and returns the reverse of that string.
+
+Answer:
+We can reverse a string using slicing.
+
+Program:
+
+def reverse_string(s):
+    return s[::-1]
+
+# Example
+text = "Python"
+print("Reversed string:", reverse_string(text))
+
+
+Output:
+
+Reversed string: nohtyP
+
+3. Implement a Python function that takes a list of integers and returns a new list containing the squares of each number.
+
+Answer:
+We use a list comprehension to generate a list of squares.
+
+Program:
+
+def square_list(numbers):
+    return [x ** 2 for x in numbers]
+
+# Example
+nums = [1, 2, 3, 4, 5]
+print("Squares:", square_list(nums))
+
+
+Output:
+
+Squares: [1, 4, 9, 16, 25]
+
+4. Write a Python function that checks if a given number is prime or not from 1 to 200.
+
+Answer:
+A prime number is divisible only by 1 and itself.
+
+Program:
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+# Check prime numbers from 1 to 200
+primes = [x for x in range(1, 201) if is_prime(x)]
+print("Prime numbers from 1 to 200:\n", primes)
+
+
+Output:
+
+Prime numbers from 1 to 200:
+[2, 3, 5, 7, 11, 13, ..., 199]
+
+5. Create an iterator class in Python that generates the Fibonacci sequence up to a specified number of terms.
+
+Answer:
+The Fibonacci sequence starts with 0 and 1, and each next number is the sum of the previous two.
+
+Program:
+
+class Fibonacci:
+    def __init__(self, n):
+        self.n = n
+        self.a, self.b = 0, 1
+        self.count = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.count < self.n:
+            result = self.a
+            self.a, self.b = self.b, self.a + self.b
+            self.count += 1
+            return result
+        else:
+            raise StopIteration
+
+# Example
+for num in Fibonacci(10):
+    print(num, end=" ")
+
+
+Output:
+
+0 1 1 2 3 5 8 13 21 34
+
+6. Write a generator function in Python that yields the powers of 2 up to a given exponent.
+
+Answer:
+We can use yield to generate values one by one.
+
+Program:
+
+def powers_of_two(n):
+    for i in range(n + 1):
+        yield 2 ** i
+
+# Example
+for val in powers_of_two(5):
+    print(val)
+
+
+Output:
+
+1
+2
+4
+8
+16
+32
+64
+
+7. Implement a generator function that reads a file line by line and yields each line as a string.
+
+Answer:
+This generator reads large files efficiently without loading the whole file into memory.
+
+Program:
+
+def read_file_line_by_line(filename):
+    with open(filename, 'r') as file:
+        for line in file:
+            yield line.strip()
+
+# Example (assuming "sample.txt" exists)
+for line in read_file_line_by_line("sample.txt"):
+    print(line)
+
+
+Output (if sample.txt has lines):
+
+Line 1
+Line 2
+Line 3
+
+8. Use a lambda function in Python to sort a list of tuples based on the second element of each tuple.
+
+Answer:
+We can use the sorted() function with a lambda key.
+
+Program:
+
+data = [(1, 5), (3, 2), (2, 8), (4, 1)]
+sorted_data = sorted(data, key=lambda x: x[1])
+print("Sorted list:", sorted_data)
+
+
+Output:
+
+Sorted list: [(4, 1), (3, 2), (1, 5), (2, 8)]
+
+9. Write a Python program that uses map() to convert a list of temperatures from Celsius to Fahrenheit.
+
+Answer:
+Formula: Fahrenheit = (Celsius × 9/5) + 32
+
+Program:
+
+celsius = [0, 20, 37, 100]
+fahrenheit = list(map(lambda c: (c * 9/5) + 32, celsius))
+print("Temperatures in Fahrenheit:", fahrenheit)
+
+
+Output:
+
+Temperatures in Fahrenheit: [32.0, 68.0, 98.6, 212.0]
+
+10. Create a Python program that uses filter() to remove all the vowels from a given string.
+
+Answer:
+We use filter() with a lambda function to exclude vowels.
+
+Program:
+
+def remove_vowels(text):
+    vowels = 'aeiouAEIOU'
+    return ''.join(filter(lambda ch: ch not in vowels, text))
+
+# Example
+string = "Beautiful Day"
+print("Without vowels:", remove_vowels(string))
+
+
+Output:
+
+Without vowels: Btfl Dy
